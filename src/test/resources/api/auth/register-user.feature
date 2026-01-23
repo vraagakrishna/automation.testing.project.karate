@@ -16,21 +16,22 @@ Feature: Register user (reusable)
 
     # conditional validation
     * eval
-    """
-    if (expected.success) {
-      var res = karate.match(response.data, {
-        id: '#string',
-        firstName: '#(user.firstName)',
-        lastName: '#(user.lastName)',
-        email: '#(user.email)',
-        createdAt: '#string'
-      });
-      if (!res.pass) karate.fail(res.message);
-    } else {
-      var res = karate.match(response.error_code, expected.error_code);
-      if (!res.pass) karate.fail(res.message);
-    }
-    """
+      """
+      if (expected.success) {
+        var res = karate.match(response.data, {
+          id: '#string',
+          firstName: '#(user.firstName)',
+          lastName: '#(user.lastName)',
+          email: '#(user.email)',
+          createdAt: '#string'
+        });
+        if (!res.pass) karate.fail(res.message);
+      }
+      else {
+        var res = karate.match(response.error_code, expected.error_code);
+        if (!res.pass) karate.fail(res.message);
+      }
+      """
 
     # return useful info
     * def result =
