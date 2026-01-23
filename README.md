@@ -109,7 +109,27 @@ Examples:
 
 ## Project Structure
 
-TBC
+```
+.
+├── src/test/java
+│   ├── hooks                           # Global Karate runtime hooks (before/after scenario logging, cross-cutting concerns)
+│   │   └── ScenarioLoggerHook.java
+│   └── runners                         # JUnit runners that selects tags, features, and execution scope
+│       └── ApiTestRunner.java
+├── src/test/resources
+│   ├── api
+│   │   ├── auth
+│   │   │   ├── auth.feature            # High-level authertication test flows
+│   │   │   ├── login-user.feature      # Reusable feature for user login API 
+│   │   │   └── register-user.feature   # Reusable feature for user registration API
+│   │   └── common
+│   │       ├── jwt-utils.js            # JWT decoding and validation helpers
+│   │       └── user-factory.js         # Test data generators for users
+│   ├── karate-config.js                # Global configuration, environment setup
+│   └── logback-test.xml                # Logging configuration for Karate execution
+├── pom.xml
+└── README.md
+```
 
 <br/>
 
@@ -126,6 +146,9 @@ TBC
 
 | Tag            | Purpose                            |
 |:---------------|:-----------------------------------|
+| `@api`         | API-level tests                    |
+| `@ui`          | UI/browser tests                   |
+| `@soap`        | SOAP service tests                 |
 | `@smoke`       | Build validation & critical checks |
 | `@sanity`      | Targeted validation after changes  | 
 | `@regression`  | Full test suite                    | 
@@ -145,14 +168,7 @@ The CI pipeline automatically:
 
 1. Runs smoke tests on every push
 2. Runs sanity tests on pull requests
-3. Enforces Java code quality rules
-4. Fails the build on test or quality issues
-
-This ensures:
-
-* Fast feedback
-* Clean test reports
-* High-quality automation code
+3. Fails the build on test or quality issues
 
 <br/>
 
