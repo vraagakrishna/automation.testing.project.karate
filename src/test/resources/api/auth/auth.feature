@@ -20,7 +20,7 @@ Feature: Auth Tests
 
     * karate.log('Running test variant: ', variantName)
 
-    * karate.call('classpath:api/auth/login-user.feature', { user: user, expected: expected })
+    * karate.call('classpath:api/auth/login-user.feature', { user: user, expected: expected, registerUser: {} })
 
     Examples:
       | name                                 | variant              | status | message                           | error_code            |
@@ -74,7 +74,11 @@ Feature: Auth Tests
           error_code: 'INVALID_CREDENTIALS'
         };
 
-        karate.call('classpath:api/auth/login-user.feature', { user: loginUser, expected: loginExpectedFail });
+        karate.call('classpath:api/auth/login-user.feature', {
+          user: loginUser,
+          expected: loginExpectedFail,
+          registerUser: user
+        });
 
         // 2: Register -> PASS
         var registerExpected = {
@@ -101,7 +105,11 @@ Feature: Auth Tests
           message: 'Login successful'
         };
 
-        karate.call('classpath:api/auth/login-user.feature', { user: loginUser, expected: loginExpectedPass });
+        karate.call('classpath:api/auth/login-user.feature', {
+          user: loginUser,
+          expected: loginExpectedPass,
+          registerUser: user
+        });
       }
       """
 

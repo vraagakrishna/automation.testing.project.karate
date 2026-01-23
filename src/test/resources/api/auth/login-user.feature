@@ -4,6 +4,7 @@ Feature: Login user (reusable)
     # Expect "user" to be passed in
     * assert user != null
     * assert expected != null
+    * assert registerUser != null
 
     Given url baseUrl + '/login'
     And request user
@@ -21,10 +22,10 @@ Feature: Login user (reusable)
         var res = karate.match(response.data, {
           user: {
             id: '#string',
-            firstName: '#string',
-            lastName: '#string',
-            email: '#string',
-            role: '#string',
+            firstName: '#(registerUser.firstName)',
+            lastName: '#(registerUser.lastName)',
+            email: '#(registerUser.email)',
+            role: 'user',
             createdAt: '#string',
             updatedAt: '#string'
           },
