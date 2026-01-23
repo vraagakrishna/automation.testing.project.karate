@@ -59,8 +59,8 @@ Feature: Auth Tests
       | Long Last Name           | longLastName           | 400    | 'Registration failed. Please try again.'      | 'REGISTRATION_FAILED' |
 
   @api
-  Scenario: Register valid users
-    * def registerUser =
+  Scenario: Register + Login flow
+    * def flow =
       """
       function () {
         var user = userFactory.validUser();
@@ -105,4 +105,4 @@ Feature: Auth Tests
       }
       """
 
-    * karate.repeat(2, registerUser)
+    * karate.repeat(2, flow)
