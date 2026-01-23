@@ -5,6 +5,30 @@ Feature: Auth Tests
     * def userFactory = call read('classpath:api/common/user-factory.js')
 
   @api
+  Scenario Outline: Login fails for invalid input: <name>
+    * def variantName = '<variant>'
+    * def user = userFactory[variantName]()
+    * def expected =
+      """
+      {
+        status: <status>,
+        success: false,
+        message: <message>,
+        error_code: <error_code>
+      }
+      """
+
+    * karate.log('Running test variant: ', variantName)
+
+    * karate.call('classpath:api/auth/login-user.feature', { user: user, expected: expected })
+
+    Examples:
+      | name                                 | variant              | status | message                           | error_code            |
+      | Missing Email                        | missingLoginEmail    | 401    | 'Email and password are required' | 'MISSING_CREDENTIALS'  |
+      | Missing Password                     | missingLoginPassword | 401    | 'Email and password are required' | 'MISSING_CREDENTIALS' |
+      | Valid Data Login Before Registration | validLoginUser       | 401    | 'Invalid email or password'       | 'INVALID_CREDENTIALS' |
+
+  @api
   Scenario Outline: Registration fails for invalid input: <name>
     * def variantName = '<variant>'
     * def user = userFactory[variantName]()
@@ -40,6 +64,9 @@ Feature: Auth Tests
       """
       function () {
         var user = userFactory.validUser();
+
+      // TODO: login
+
         var expected = {
           status: 201,
           success: true,
@@ -47,6 +74,8 @@ Feature: Auth Tests
         };
 
         var r = karate.call('classpath:api/auth/register-user.feature', { user: user, expected: expected });
+
+      // TODO: login
       }
       """
 

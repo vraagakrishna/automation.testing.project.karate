@@ -109,6 +109,27 @@ function () {
         return u;
     }
 
+    function validLoginUser() {
+        var u = validUser();
+        delete u.firstName;
+        delete u.lastName;
+        delete u.confirmPassword;
+
+        return u;
+    }
+
+    function missingLoginEmail() {
+        var u = validLoginUser();
+        delete u.email;
+        return u;
+    }
+
+    function missingLoginPassword() {
+        var u = validLoginUser();
+        delete u.password;
+        return u;
+    }
+
     return {
         validUser: validUser,
         missingFirstName: missingFirstName,
@@ -119,6 +140,9 @@ function () {
         mismatchPasswords: mismatchPasswords,
         weakPassword: weakPassword,
         longFirstName: longFirstName,
-        longLastName: longLastName
+        longLastName: longLastName,
+        missingLoginEmail: missingLoginEmail,
+        missingLoginPassword: missingLoginPassword,
+        validLoginUser: validLoginUser
     };
 }
