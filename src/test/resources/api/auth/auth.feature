@@ -77,7 +77,7 @@ Feature: Auth Tests
         karate.call('classpath:api/auth/login-user.feature', {
           user: loginUser,
           expected: loginExpectedFail,
-          registerUser: user
+          registerUser: {}
         });
 
         // 2: Register -> PASS
@@ -87,7 +87,7 @@ Feature: Auth Tests
           message: 'User registered successfully'
         };
 
-        karate.call('classpath:api/auth/register-user.feature', { user: user, expected: registerExpected });
+        var r = karate.call('classpath:api/auth/register-user.feature', { user: user, expected: registerExpected });
 
         // 3: Re-Register -> FAIL
         var registerExpectedFail = {
@@ -108,7 +108,7 @@ Feature: Auth Tests
         karate.call('classpath:api/auth/login-user.feature', {
           user: loginUser,
           expected: loginExpectedPass,
-          registerUser: user
+          registerUser: r.response.data
         });
       }
       """

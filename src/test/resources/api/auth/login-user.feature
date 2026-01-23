@@ -21,7 +21,7 @@ Feature: Login user (reusable)
       if (expected.success) {
         var res = karate.match(response.data, {
           user: {
-            id: '#string',
+            id: '#(registerUser.id)',
             firstName: '#(registerUser.firstName)',
             lastName: '#(registerUser.lastName)',
             email: '#(registerUser.email)',
@@ -32,6 +32,10 @@ Feature: Login user (reusable)
           token: '#string'
         });
         if (!res.pass) karate.fail(res.message);
+
+        // validate JWT
+        var jwtUtils = karate.call('classpath:api/common/jwt-utils.js');
+        jwtUtils.validateJwtToken(response.data.token, registerUser);
       }
       else {
         var res = karate.match(response.error_code, expected.error_code);
