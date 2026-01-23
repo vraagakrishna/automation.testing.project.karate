@@ -130,6 +130,14 @@ function () {
         return u;
     }
 
+    // derive login request from register request
+    function toLoginUser(registerUser) {
+        return {
+            email: registerUser.email,
+            password: registerUser.password
+        };
+    }
+
     return {
         validUser: validUser,
         missingFirstName: missingFirstName,
@@ -143,6 +151,7 @@ function () {
         longLastName: longLastName,
         missingLoginEmail: missingLoginEmail,
         missingLoginPassword: missingLoginPassword,
-        validLoginUser: validLoginUser
+        validLoginUser: validLoginUser,
+        toLoginUser: toLoginUser
     };
 }

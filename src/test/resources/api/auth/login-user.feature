@@ -24,6 +24,7 @@ Feature: Login user (reusable)
           firstName: '#string',
           lastName: '#string',
           email: '#string',
+          role: '#string',
           createdAt: '#string',
           updatedAt: '#string'
         },

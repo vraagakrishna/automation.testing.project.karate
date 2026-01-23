@@ -64,18 +64,44 @@ Feature: Auth Tests
       """
       function () {
         var user = userFactory.validUser();
+        var loginUser = userFactory.toLoginUser(user);
 
-      // TODO: login
+        // 1: Login BEFORE registration -> FAIL
+        var loginExpectedFail = {
+          status: 401,
+          success: false,
+          message: 'Invalid email or password',
+          error_code: 'INVALID_CREDENTIALS'
+        };
 
-        var expected = {
+        karate.call('classpath:api/auth/login-user.feature', { user: loginUser, expected: loginExpectedFail });
+
+        // 2: Register -> PASS
+        var registerExpected = {
           status: 201,
           success: true,
           message: 'User registered successfully'
         };
 
-        var r = karate.call('classpath:api/auth/register-user.feature', { user: user, expected: expected });
+        karate.call('classpath:api/auth/register-user.feature', { user: user, expected: registerExpected });
 
-      // TODO: login
+        // 3: Re-Register -> FAIL
+        var registerExpectedFail = {
+          status: 400,
+          success: false,
+          message: 'User with this email already exists',
+          error_code: 'USER_EXISTS'
+        }
+        karate.call('classpath:api/auth/register-user.feature', { user: user, expected: registerExpectedFail });
+
+        // 4: Login AFTER registration -> PASS
+        var loginExpectedPass = {
+          status: 200,
+          success: true,
+          message: 'Login successful'
+        };
+
+        karate.call('classpath:api/auth/login-user.feature', { user: loginUser, expected: loginExpectedPass });
       }
       """
 
