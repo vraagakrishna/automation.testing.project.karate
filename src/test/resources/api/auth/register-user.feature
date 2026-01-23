@@ -18,15 +18,17 @@ Feature: Register user (reusable)
     * eval
     """
     if (expected.success) {
-      karate.match(response.data, {
+      var res = karate.match(response.data, {
         id: '#string',
         firstName: '#(user.firstName)',
         lastName: '#(user.lastName)',
         email: '#(user.email)',
         createdAt: '#string'
       });
+      if (!res.pass) karate.fail(res.message);
     } else {
-      karate.match(response.error_code, expected.error_code);
+      var res = karate.match(response.error_code, expected.error_code);
+      if (!res.pass) karate.fail(res.message);
     }
     """
 
