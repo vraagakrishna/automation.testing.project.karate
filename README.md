@@ -33,16 +33,22 @@ This repository serves as a **learning and experimentation platform** showcasing
 ### SOAP API Testing
 
 * SOAP service testing using Karate's built-in XML support
-* WSDL-based request construction
-* XML request and response validation
-* XPath assertions for SOAP responses
+* External SOAP XML templates with dynamic parameter injection
+* XPath-based assertions with namespace-safe expressions
+* Centralized and reusable SOAP response validators
+* Numeric and precision-aware response validation
+* HTTP error and server fault handling (400 / 500 scenarios)
+* Separation of request construction and assertion logic
 * Demonstrates testing **REST and SOAP APIs within the same framework**
 
-Examples include:
+Implemented Examples:
 
-* SOAP request body construction
-* Header and envelope validation
-* Fault response handling
+* SOAP request body construction using external XML files
+* Dynamic request data substitution via placeholders
+* SOAP response validation using XPath
+* Business rule validation for arithmetic operations
+* Graceful handling of invalid inputs and server errors
+* Reusable assertion helpers for SOAP responses
 
 ### UI Testing
 
@@ -147,8 +153,8 @@ Examples:
 | Tag            | Purpose                            |
 |:---------------|:-----------------------------------|
 | `@api`         | API-level tests                    |
-| `@ui`          | UI/browser tests                   |
 | `@soap`        | SOAP service tests                 |
+| `@ui`          | UI/browser tests                   |
 | `@smoke`       | Build validation & critical checks |
 | `@sanity`      | Targeted validation after changes  | 
 | `@regression`  | Full test suite                    | 
