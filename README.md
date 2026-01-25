@@ -11,12 +11,11 @@ testing framework**.
 This repository serves as a **learning and experimentation platform** showcasing what Karate offers across:
 
 * API testing
+* SOAP API testing
 * UI testing
-* Authentication handling (JWT)
-* Smoke and Sanity testing strategies
+* Smoke and Sanity testing
 * Performance testing
-* CI/CD integration
-* Logging and code quality best practices
+* CI/CD integration 
 
 <br/>
 
@@ -104,12 +103,10 @@ Examples:
 * Log output focused on failures and debugging needs
 * Uses Logback configuration for fine-grained control
 
-### Code Quality & CI/CD
+### CI/CD
 
-* Java code quality checks (Checkstyle, SpotBugs)
 * Tagged test execution (`@smoke`, `@sanity`)
 * CI pipeline using **GitHub Actions**
-* Automated quality gates to block failing builds
 
 <br/>
 
@@ -118,21 +115,29 @@ Examples:
 ```
 .
 ├── src/test/java
-│   ├── hooks                           # Global Karate runtime hooks (before/after scenario logging, cross-cutting concerns)
+│   ├── hooks                               # Global Karate runtime hooks (before/after scenario logging, cross-cutting concerns)
 │   │   └── ScenarioLoggerHook.java
-│   └── runners                         # JUnit runners that selects tags, features, and execution scope
-│       └── ApiTestRunner.java
+│   └── runners                             # JUnit runners that selects tags, features, and execution scope
+│       ├── ApiTestRunner.java
+│       └── SoapTestRunner.java
 ├── src/test/resources
 │   ├── api
 │   │   ├── auth
-│   │   │   ├── auth.feature            # High-level authertication test flows
-│   │   │   ├── login-user.feature      # Reusable feature for user login API 
-│   │   │   └── register-user.feature   # Reusable feature for user registration API
+│   │   │   ├── auth.feature                # High-level authertication test flows
+│   │   │   ├── login-user.feature          # Reusable feature for user login API 
+│   │   │   └── register-user.feature       # Reusable feature for user registration API
 │   │   └── common
-│   │       ├── jwt-utils.js            # JWT decoding and validation helpers
-│   │       └── user-factory.js         # Test data generators for users
-│   ├── karate-config.js                # Global configuration, environment setup
-│   └── logback-test.xml                # Logging configuration for Karate execution
+│   │       ├── jwt-utils.js                # JWT decoding and validation helpers
+│   │       └── user-factory.js             # Test data generators for users
+│   ├── soap
+│   │   ├── common 
+│   │   │   └── soap-validators.js          # Reusable SOAP assertions
+│   │   ├── requests                        # SOAP request templates
+│   │   │   ├── add-integer.xml 
+│   │   │   └── divide-integer.xml
+│   │   └── integer-calculations.feature    # Arithmetic SOAP scenarios
+│   ├── karate-config.js                    # Global configuration, environment setup
+│   └── logback-test.xml                    # Logging configuration for Karate execution
 ├── pom.xml
 └── README.md
 ```
