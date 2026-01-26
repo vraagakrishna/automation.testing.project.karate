@@ -14,7 +14,10 @@ function () {
 
         var phone = '';
         for (var i = 0; i < digits; i++) {
-            phone += Math.floor(Math.random() * 10);
+            if (i == 0)
+                phone += Math.floor(Math.random() * 9) + 1;
+            else
+                phone += Math.floor(Math.random() * 10);
         }
         return phone;
     }
