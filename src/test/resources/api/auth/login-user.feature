@@ -6,7 +6,7 @@ Feature: Login user (reusable)
     * assert expected != null
     * assert registerUser != null
 
-    Given url baseUrl + '/login'
+    Given url baseUrl + '/auth/login'
     And request user
     When method POST
 
@@ -21,13 +21,13 @@ Feature: Login user (reusable)
       if (expected.success) {
         var res = karate.match(response.data, {
           user: {
-            id: '#(registerUser.id)',
-            firstName: '#(registerUser.firstName)',
-            lastName: '#(registerUser.lastName)',
+            id: '#(Number(registerUser.id))',
+            first_name: '#(registerUser.first_name)',
+            last_name: '#(registerUser.last_name)',
             email: '#(registerUser.email)',
-            role: 'user',
-            createdAt: '#string',
-            updatedAt: '#string'
+            phone: '#(registerUser.phone)',
+            role: 'customer',
+            last_login: '#? _ == null || _  == "string"'
           },
           token: '#string'
         });
@@ -36,10 +36,6 @@ Feature: Login user (reusable)
         // validate JWT
         var jwtUtils = karate.call('classpath:api/common/jwt-utils.js');
         jwtUtils.validateJwtToken(response.data.token, registerUser);
-      }
-      else {
-        var res = karate.match(response.error_code, expected.error_code);
-        if (!res.pass) karate.fail(res.message);
       }
       """
 

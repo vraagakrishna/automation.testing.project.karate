@@ -20,7 +20,7 @@ function () {
     function validateJwtToken(jwtToken, expectedUser) {
         var decoded = decodeJwt(jwtToken);
 
-        if (decoded.userId != expectedUser.id) {
+        if (expectedUser.id != null && decoded.user_id != expectedUser.id) {
             karate.fail('JWT userId does not match: ' + decoded.userId + ' != ' + expectedUser.id);
         }
 

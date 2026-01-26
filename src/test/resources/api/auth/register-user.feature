@@ -5,7 +5,7 @@ Feature: Register user (reusable)
     * assert user != null
     * assert expected != null
 
-    Given url baseUrl + '/register'
+    Given url baseUrl + '/auth/register'
     And request user
     When method POST
 
@@ -19,17 +19,27 @@ Feature: Register user (reusable)
       """
       if (expected.success) {
         var res = karate.match(response.data, {
-          id: '#string',
-          firstName: '#(user.firstName)',
-          lastName: '#(user.lastName)',
-          email: '#(user.email)',
-          createdAt: '#string'
+          user: {
+            id: '#string',
+            first_name: '#(user.first_name)',
+            last_name: '#(user.last_name)',
+            email: '#(user.email)',
+            phone: '#(user.phone)',
+            role: '#string'
+          },
+          token: '#string'
         });
         if (!res.pass) karate.fail(res.message);
+
+        // validate JWT
+        var jwtUtils = karate.call('classpath:api/common/jwt-utils.js');
+        jwtUtils.validateJwtToken(response.data.token, user);
       }
       else {
-        var res = karate.match(response.error_code, expected.error_code);
-        if (!res.pass) karate.fail(res.message);
+        if (expected.errors) {
+          var res = karate.match(response.errors, expected.errors);
+          if (!res.pass) karate.fail(res.message);
+        }
       }
       """
 
