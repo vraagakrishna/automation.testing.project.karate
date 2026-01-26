@@ -23,11 +23,18 @@ This repository serves as a **learning and experimentation platform** showcasing
 
 ### API Testing
 
-* REST API testing based on Swagger documentation
-* JSON request/response validation
+* REST API testing driven by Swagger/OpenAPI documentation
+* JSON request and response contract validation
 * Positive and negative test scenarios
+* End-to-end authentication flow testing (Register -> Login -> Authenticated APIs)
 * JWT-based authentication handling
-* Reusable feature files and shared test data
+  * Valid tokens
+  * Invalid tokens
+  * Expired tokens
+* Centralised test data factories for dynamic user generation 
+* Reusable feature files for common API operations
+* Shared JavaScript utilities (JWT decoding, validation, token manipulation)
+* Conditional assertions based on response outcomes
 
 ### SOAP API Testing
 
@@ -144,15 +151,6 @@ Examples:
 ├── pom.xml
 └── README.md
 ```
-
-<br/>
-
-## Authentication
-
-* JWT-based authentication
-* Token generation handled centrally
-* Tokens reused across API and UI tests
-* No hard-coded credentials or tokens
 
 <br/>
 
