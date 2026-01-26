@@ -31,8 +31,27 @@ function () {
         return true;
     }
 
+    function expireJwtToken(validToken) {
+        var payload = decodeJwt(validToken);
+        var parts = validToken.split('.');
+
+        // set exp to 1 hour ago
+        payload.exp = Math.floor(Date.now() / 1000) - 3600;
+
+        var modifiedPayload = java.util.Base64
+                                        .getUrlEncoder()
+                                        .withoutPadding()
+                                        .encodeToString(
+                                            new java.lang.String(JSON.stringify(payload)).getBytes('UTF-8')
+                                        );
+
+        // intentionally keep signature invalid
+        return parts[0] + '.' + modifiedPayload + '.' + parts[2];
+    }
+
     return {
         decodeJwt: decodeJwt,
-        validateJwtToken: validateJwtToken
+        validateJwtToken: validateJwtToken,
+        expireJwtToken: expireJwtToken
     };
 }

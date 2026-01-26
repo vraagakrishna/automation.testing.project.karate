@@ -126,6 +126,9 @@ Examples:
 │   │   │   ├── auth.feature                # High-level authertication test flows
 │   │   │   ├── login-user.feature          # Reusable feature for user login API 
 │   │   │   └── register-user.feature       # Reusable feature for user registration API
+│   │   ├── bookings
+│   │   │   ├── get-bookings.feature        # Reusable feature for user bookings API
+│   │   │   └── user-bookings.feature       # High-level booking test flows
 │   │   └── common
 │   │       ├── jwt-utils.js                # JWT decoding and validation helpers
 │   │       └── user-factory.js             # Test data generators for users
