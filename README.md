@@ -15,7 +15,7 @@ This repository serves as a **learning and experimentation platform** showcasing
 * UI testing
 * Smoke and Sanity testing
 * Performance testing
-* CI/CD integration 
+* CI/CD integration
 
 <br/>
 
@@ -28,15 +28,16 @@ This repository serves as a **learning and experimentation platform** showcasing
 * Positive and negative test scenarios
 * End-to-end authentication flow testing (Register -> Login -> Authenticated APIs)
 * JWT-based authentication handling
-  * Valid tokens
-  * Invalid tokens
-  * Expired tokens
-* Centralised test data factories for dynamic user generation 
+    * Valid tokens
+    * Invalid tokens
+    * Expired tokens
+* Centralised test data factories for dynamic user generation
 * Reusable feature files for common API operations
 * Shared JavaScript utilities (JWT decoding, validation, token manipulation)
 * Conditional assertions based on response outcomes
 
 Useful resources:
+
 * https://medium.com/@sachinifonseka08/api-testing-with-karate-framework-53b5d5d47776
 
 ### SOAP API Testing
@@ -69,6 +70,7 @@ Implemented Examples:
 * Demonstrates **API and UI testing in the same framework**
 
 Useful resources:
+
 * https://docs.karatelabs.io/extensions/ui-testing/#shared-features
 
 
@@ -135,19 +137,20 @@ Examples:
 │   │   └── ScenarioLoggerHook.java
 │   └── runners                             # JUnit runners that selects tags, features, and execution scope
 │       ├── ApiTestRunner.java
-│       └── SoapTestRunner.java
+│       ├── SoapTestRunner.java
+│       └── UiTestRunner.java
 ├── src/test/resources
 │   ├── api
 │   │   ├── auth
 │   │   │   ├── auth.feature                # High-level authertication test flows
 │   │   │   ├── login-user.feature          # Reusable feature for user login API 
 │   │   │   └── register-user.feature       # Reusable feature for user registration API
-│   │   ├── bookings
-│   │   │   ├── get-bookings.feature        # Reusable feature for user bookings API
-│   │   │   └── user-bookings.feature       # High-level booking test flows
-│   │   └── common
-│   │       ├── jwt-utils.js                # JWT decoding and validation helpers
-│   │       └── user-factory.js             # Test data generators for users
+│   │   └── bookings
+│   │       ├── get-bookings.feature        # Reusable feature for user bookings API
+│   │       └── user-bookings.feature       # High-level booking test flows
+│   ├── common
+│   │   ├── jwt-utils.js                    # JWT decoding and validation helpers
+│   │   └── user-factory.js                 # Test data generators for users
 │   ├── soap
 │   │   ├── common 
 │   │   │   └── soap-validators.js          # Reusable SOAP assertions
@@ -155,6 +158,8 @@ Examples:
 │   │   │   ├── add-integer.xml 
 │   │   │   └── divide-integer.xml
 │   │   └── integer-calculations.feature    # Arithmetic SOAP scenarios
+│   ├── ui
+│   │   └── auth-ui.feature                 # UI Auth tests
 │   ├── karate-config.js                    # Global configuration, environment setup
 │   └── logback-test.xml                    # Logging configuration for Karate execution
 ├── pom.xml
