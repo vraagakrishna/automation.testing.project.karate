@@ -46,7 +46,7 @@ Feature: Auth API performance tests
     * karate.log('REQUEST: ')
     * karate.log(user)
 
-    Given path '/auth/register'
+    Given path '/auth/login'
     And request user
     When method POST
 
