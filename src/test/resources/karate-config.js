@@ -4,6 +4,10 @@ function fn() {
 
     karate.configure('printEnabled', true);
 
+    karate.configure('report', { showLog: true });
+    karate.configure('connectTimeout', 10000);
+    karate.configure('readTimeout', 20000);
+
     karate.configure('driver', { showDriverLog: false });
 
     var headless = (karate.properties['headless'] !== 'false') || true;

@@ -73,6 +73,27 @@ Useful resources:
 
 * https://docs.karatelabs.io/extensions/ui-testing/#shared-features
 
+### Performance Testing
+
+* Lightweight performance validation using Karate, aimed at early detection of slow responses rather than full-scale load benchmarking.
+* Goal is to **validate performance expectations during development and CI**, not to replicate dedicated load-testing tools
+* Smoke-level performance checks integrated into automated tests
+* Ensures critical flows respond within acceptable time limits
+* Designed for fast feedback in CI pipelines
+* Not intended for stress, soak or capacity testing 
+
+#### Performance coverage
+
+| Type            | What it measures                     | Tools                      | 
+|:----------------|:-------------------------------------|:---------------------------| 
+| API performance | Endpoint response time and stability | Karate API (parallel runs) | 
+| UI performance  | End-to-end user flow responsiveness  | Karate UI (Playwright)     | 
+
+#### Notes
+
+* API performance tests run in parallel to simulate concurrent requests
+* UI performance tests run sequentially to avoid browser-level interference
+* Thresholds are enforced at rest-runner level for clear pass/fail criteria
 
 ### Smoke Testing
 
@@ -108,12 +129,6 @@ Examples:
 * Login -> Get Profile -> Update Profile
 * Authenticated testimonial operations
 
-### Performance Testing
-
-* Lightweight performance and load testing using Karate
-* Focus on **understanding Karate's performance capabilities**, not benchmarking
-* Suitable for smoke-level performance validation
-
 ### Logging Strategy
 
 * Reduced default Karate verbosity
@@ -137,12 +152,14 @@ Examples:
 │   │   └── ScenarioLoggerHook.java
 │   └── runners                             # JUnit runners that selects tags, features, and execution scope
 │       ├── ApiTestRunner.java
+│       ├── PerformanceTestRunner.java
 │       ├── SoapTestRunner.java
 │       └── UiTestRunner.java
 ├── src/test/resources
 │   ├── api
 │   │   ├── auth
 │   │   │   ├── auth.feature                # High-level authertication test flows
+│   │   │   ├── auth-performance.feature    # Auth performance tests
 │   │   │   ├── login-user.feature          # Reusable feature for user login API 
 │   │   │   └── register-user.feature       # Reusable feature for user registration API
 │   │   └── bookings

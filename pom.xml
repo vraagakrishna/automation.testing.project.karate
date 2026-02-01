@@ -38,6 +38,7 @@
                         <include>**/ApiTestRunner.java</include>
                         <include>**/SoapTestRunner.java</include>
                         <include>**/UiTestRunner.java</include>
+                        <include>**/PerformanceTestRunner.java</include>
                     </includes>
                 </configuration>
             </plugin>

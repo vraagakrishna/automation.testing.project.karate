@@ -3,13 +3,19 @@ Feature: Auth UI validation
   Background:
     * configure driver = driverConfig
     * driver uiUrl
+    * def start = new Date().getTime()
 
     * def userFactory = call read('classpath:common/user-factory.js')
 
-  @ui
+  @ui @perf
   Scenario Outline: Login validation - <name>
     # Homepage loads and shows company name
     * waitFor('{div}Edendale Sports Projects').exists
+    * def loadTime = new Date().getTime() - start
+
+    * karate.log('Home Page load time (ms):', loadTime)
+
+    * assert loadTime < 3500
 
     # Navigate to login page
     * click('{button}Login')
@@ -23,9 +29,16 @@ Feature: Auth UI validation
     * if (data.email != null) below('{}Email Address').input(data.email)
     * if (data.password != null) below('{}Password').input(data.password)
 
+    * def start = new Date().getTime()
     * click('{button}Sign in')
 
     * waitFor(error)
+
+    * def submitTime = new Date().getTime() - start
+
+    * karate.log('Login submit time (ms):', submitTime)
+
+    * assert submitTime < 2000
 
     Examples:
       | name              | variant              | error                                    |
@@ -37,10 +50,15 @@ Feature: Auth UI validation
       | Short Password    | shortLoginPassword   | {}Password must be at least 6 characters |
       | Valid Credentials | validLoginUser       | {}Invalid credentials                    |
 
-  @ui
+  @ui @perf
   Scenario Outline: Register validation - <name>
     # Homepage loads and shows company name
     * waitFor('{div}Edendale Sports Projects').exists
+    * def loadTime = new Date().getTime() - start
+
+    * karate.log('Home Page load time (ms):', loadTime)
+
+    * assert loadTime < 3500
 
     # Navigate to login page
     * click('{button}Register')

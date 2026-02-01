@@ -15,6 +15,7 @@ Feature: Register user (reusable)
     And request user
     When method POST
 
+    * karate.log('RESPONSE TIME: ' + responseTime)
     * karate.log('STATUS CODE: ' + responseStatus)
     * karate.log('RESPONSE: ')
     * karate.log(response)

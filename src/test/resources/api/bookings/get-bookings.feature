@@ -14,6 +14,7 @@ Feature: Get bookings (reusable)
     And header Authorization = 'Bearer ' + token
     When method GET
 
+    * karate.log('RESPONSE TIME: ' + responseTime)
     * karate.log('STATUS CODE: ' + responseStatus)
     * karate.log('RESPONSE: ')
     * karate.log(response)

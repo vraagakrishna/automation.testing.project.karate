@@ -21,6 +21,7 @@ Feature: SOAP Demo - Integer Calculations
 
     When method POST
 
+    * karate.log('RESPONSE TIME: ' + responseTime)
     * karate.log('STATUS CODE: ' + responseStatus)
     * karate.log('RESPONSE: ')
     * karate.log(response)
@@ -60,6 +61,7 @@ Feature: SOAP Demo - Integer Calculations
 
     When method POST
 
+    * karate.log('RESPONSE TIME: ' + responseTime)
     * karate.log('STATUS CODE: ' + responseStatus)
     * karate.log('RESPONSE: ')
     * karate.log(response)
