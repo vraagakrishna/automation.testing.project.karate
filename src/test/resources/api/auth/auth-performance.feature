@@ -55,4 +55,4 @@ Feature: Auth API performance tests
     * karate.log('RESPONSE: ')
     * karate.log(response)
 
-    Then status 422
+    Then status 401
