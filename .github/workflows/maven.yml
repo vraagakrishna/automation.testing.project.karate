@@ -1,0 +1,56 @@
+name: Running Karate Tests
+
+permissions:
+  contents: read  # Required for checkout
+
+on:
+  workflow_dispatch:  # allow manual runs too
+
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
+
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout current repo
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up JDK
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      # Run smoke tests
+      - name: Run smoke tests
+        run: mvn clean test -Psmoke
+
+      # Run all tests only if smoke passed
+      - name: Run all tests
+        if: ${{ success() }}  # Ensures it runs only if previous step passed
+        run: mvn clean test -Pfull
+
+      # Upload test report
+      - name: Upload Test Evidence
+        if: ${{ always() }}  # Ensures report is uploaded even if previous steps fail
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-evidence
+          path: ./target/karate-reports/
