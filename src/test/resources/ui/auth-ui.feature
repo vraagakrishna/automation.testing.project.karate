@@ -90,7 +90,10 @@ Feature: Auth UI validation
       """
       if (agree_terms != 'true')
       {
+        // Add a small wait for the validationMessage animation to occur
+        java.lang.Thread.sleep(150);
         var msg = script("document.querySelector('#agree-terms').validationMessage");
+      
         var res = karate.match(msg, error);
         if (!res.pass) karate.fail(res.message);
       }
