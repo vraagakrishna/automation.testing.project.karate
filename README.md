@@ -19,6 +19,14 @@ This repository serves as a **learning and experimentation platform** showcasing
 
 <br/>
 
+## Pre-requisites / Requirements
+
+* Java 21
+* Maven 2.x
+* Chrome browser for UI tests
+
+<br/>
+
 ## What This Project Demonstrates
 
 ### API Testing
@@ -75,12 +83,14 @@ Useful resources:
 
 ### Performance Testing
 
-* Lightweight performance validation using Karate, aimed at early detection of slow responses rather than full-scale load benchmarking.
-* Goal is to **validate performance expectations during development and CI**, not to replicate dedicated load-testing tools
+* Lightweight performance validation using Karate, aimed at early detection of slow responses rather than full-scale
+  load benchmarking.
+* Goal is to **validate performance expectations during development and CI**, not to replicate dedicated load-testing
+  tools
 * Smoke-level performance checks integrated into automated tests
 * Ensures critical flows respond within acceptable time limits
 * Designed for fast feedback in CI pipelines
-* Not intended for stress, soak or capacity testing 
+* Not intended for stress, soak or capacity testing
 
 #### Performance coverage
 
@@ -193,20 +203,61 @@ Examples:
 
 ## Test Tagged Strategy
 
-| Tag           | Purpose                            |
-|:--------------|:-----------------------------------|
-| `@api`        | API-level tests                    |
-| `@soap`       | SOAP service tests                 |
-| `@ui`         | UI/browser tests                   |
-| `@perf`       | Load & performance scenarios       |
-| `@smoke`      | Build validation & critical checks |
-| `@sanity`     | Targeted validation after changes  |
+| Tag       | Purpose                            |
+|:----------|:-----------------------------------|
+| `@api`    | API-level tests                    |
+| `@soap`   | SOAP service tests                 |
+| `@ui`     | UI/browser tests                   |
+| `@perf`   | Load & performance scenarios       |
+| `@smoke`  | Build validation & critical checks |
+| `@sanity` | Targeted validation after changes  |
 
 <br/>
 
+## Setup / Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/vraagakrishna/automation.testing.project.karate.git 
+cd automation.testing.project.karate
+```
+
+2. Build the project
+```bash
+mvn clean install
+```
+
 ## Running Tests Locally
 
-TBC
+This project uses **Maven profiles** to control test execution:
+
+### 1. Run Smoke Tests Only
+
+Smoke tests are **fast, critical checks** to make sure the system is stable.
+Run them with:
+
+```bash
+mvn test -PSmoke
+```
+
+* Only smoke tests (`SmokeTestRunner.java`) will run.
+* Useful for quick verification before running the full test suite
+
+### 2. Run Full Test Suite
+
+The full suite includes **API**, **UI**, **performance**, and **other tests**.
+Run them with:
+
+```bash
+mvn test -Pfull
+```
+
+* Executes all test runners (`ApiTestRunner.java`, `UITestRunner.java`, `PerformanceTestRunner.java`, etc.)
+* Only run this after smoke tests pass for stability.
+
+### Notes:
+
+* Smoke tests act as a **gatekeeper**. If they fail, it is recommended not to run the full suite.
 
 <br/>
 
