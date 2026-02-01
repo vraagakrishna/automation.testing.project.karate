@@ -1,5 +1,6 @@
 Feature: Register user (reusable)
 
+  @ignore
   Scenario:
     # Expect "user" and "expected" to be passed in
     * assert user != null

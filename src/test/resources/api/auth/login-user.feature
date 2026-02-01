@@ -1,5 +1,6 @@
 Feature: Login user (reusable)
 
+  @ignore
   Scenario:
     # Expect "user" to be passed in
     * assert user != null

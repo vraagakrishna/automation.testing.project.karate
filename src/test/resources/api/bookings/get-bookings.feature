@@ -1,5 +1,6 @@
 Feature: Get bookings (reusable)
 
+  @ignore
   Scenario:
     # Expect "token" to be passed in
     * assert token != null

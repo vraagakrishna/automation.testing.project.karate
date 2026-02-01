@@ -60,7 +60,7 @@
 
                         <configuration>
                             <includes>
-                                <include>**/*.java</include>
+                                <include>**/FullTestRunner.java</include>
                             </includes>
                         </configuration>
                     </plugin>
