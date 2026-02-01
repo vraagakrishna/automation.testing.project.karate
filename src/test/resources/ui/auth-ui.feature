@@ -66,6 +66,9 @@ Feature: Auth UI validation
 
     * def data = userFactory[variant]()
 
+    # UI tests should not have '+27'; the application adds it in before sending to BE
+    * if (data.phone != null) data.phone = data.phone.substring(3)
+
     * karate.log('DATA: ')
     * karate.log(data)
 
