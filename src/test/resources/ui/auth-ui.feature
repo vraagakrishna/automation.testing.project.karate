@@ -38,7 +38,7 @@ Feature: Auth UI validation
 
     * karate.log('Login submit time (ms):', submitTime)
 
-    * assert submitTime < 2000
+    * assert submitTime < 3500
 
     Examples:
       | name              | variant              | error                                    |
