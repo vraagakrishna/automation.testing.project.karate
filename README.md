@@ -95,7 +95,11 @@ Useful resources:
 * UI performance tests run sequentially to avoid browser-level interference
 * Thresholds are enforced at rest-runner level for clear pass/fail criteria
 
-### Smoke Testing
+### Smoke and Sanity Testing
+
+This project follows a layered test strategy to ensure fast feedback and stability.
+
+#### Smoke Tests
 
 Smoke tests answer the question:
 > "Is the application stable enough to continue testing?"
@@ -103,15 +107,13 @@ Smoke tests answer the question:
 Characteristics:
 
 * Small and fast test suites
+* To verify the system is up and usable
 * Covers critical functionality only
 * Executed on every CI build
 
 Examples:
 
-* API health checks
-* User registration
-* Login
-* Authenticated API access
+* Currently implemented for Auth endpoints and Auth UI pages
 
 ### Sanity Testing
 
@@ -123,11 +125,12 @@ Characteristics:
 * Focused and deeper than smoke tests
 * Executed after bug fixes or minor changes
 * Validates end-to-end flows
+* Short-lived and scoped to impacted areas only
+* Promoted to regression tests once stability is confirmed
 
 Examples:
 
-* Login -> Get Profile -> Update Profile
-* Authenticated testimonial operations
+* Not yet implemented - planned for future changes
 
 ### Logging Strategy
 
@@ -153,6 +156,8 @@ Examples:
 │   └── runners                             # JUnit runners that selects tags, features, and execution scope
 │       ├── ApiTestRunner.java
 │       ├── PerformanceTestRunner.java
+│       ├── SanityTestRunner.java
+│       ├── SmokeTestRunner.java
 │       ├── SoapTestRunner.java
 │       └── UiTestRunner.java
 ├── src/test/resources
@@ -176,7 +181,8 @@ Examples:
 │   │   │   └── divide-integer.xml
 │   │   └── integer-calculations.feature    # Arithmetic SOAP scenarios
 │   ├── ui
-│   │   └── auth-ui.feature                 # UI Auth tests
+│   │   ├── auth-ui.feature                 # UI Auth tests
+│   │   └── smoke-ui.feature                # UI Smoke tests
 │   ├── karate-config.js                    # Global configuration, environment setup
 │   └── logback-test.xml                    # Logging configuration for Karate execution
 ├── pom.xml
@@ -187,15 +193,14 @@ Examples:
 
 ## Test Tagged Strategy
 
-| Tag            | Purpose                            |
-|:---------------|:-----------------------------------|
-| `@api`         | API-level tests                    |
-| `@soap`        | SOAP service tests                 |
-| `@ui`          | UI/browser tests                   |
-| `@smoke`       | Build validation & critical checks |
-| `@sanity`      | Targeted validation after changes  | 
-| `@regression`  | Full test suite                    | 
-| `@performance` | Load & performance scenarios       |
+| Tag           | Purpose                            |
+|:--------------|:-----------------------------------|
+| `@api`        | API-level tests                    |
+| `@soap`       | SOAP service tests                 |
+| `@ui`         | UI/browser tests                   |
+| `@perf`       | Load & performance scenarios       |
+| `@smoke`      | Build validation & critical checks |
+| `@sanity`     | Targeted validation after changes  |
 
 <br/>
 
@@ -214,7 +219,3 @@ The CI pipeline automatically:
 3. Fails the build on test or quality issues
 
 <br/>
-
-
-
-

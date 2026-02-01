@@ -4,7 +4,7 @@ Feature: Auth API performance tests
     * url baseUrl
     * configure headers = { Content-Type: 'application/json' }
 
-  @api @perf
+  @api @perf @smoke
   Scenario: Register API performance
     * def user =
       """
@@ -32,7 +32,7 @@ Feature: Auth API performance tests
 
     Then status 422
 
-  @api @perf
+  @api @perf @smoke
   Scenario: Login API performance
     * def user =
       """
