@@ -12,9 +12,19 @@ Feature: SOAP Demo - Integer Calculations
 
     * def requestBody = karate.readAsString('classpath:soap/requests/add-integer.xml')
     * eval requestBody = requestBody.replace('${a}', a).replace('${b}', b)
+
+    * karate.log('URL: ' + 'http://tempuri.org/AddInteger')
+    * karate.log('REQUEST: ')
+    * karate.log(requestBody)
+
     And request requestBody
 
     When method POST
+
+    * karate.log('STATUS CODE: ' + responseStatus)
+    * karate.log('RESPONSE: ')
+    * karate.log(response)
+
     Then status <status>
 
     * eval
@@ -41,9 +51,19 @@ Feature: SOAP Demo - Integer Calculations
 
     * def requestBody = karate.readAsString('classpath:soap/requests/divide-integer.xml')
     * eval requestBody = requestBody.replace('${a}', a).replace('${b}', b)
+
+    * karate.log('URL: ' + 'http://tempuri.org/DivideInteger')
+    * karate.log('REQUEST: ')
+    * karate.log(requestBody)
+
     And request requestBody
 
     When method POST
+
+    * karate.log('STATUS CODE: ' + responseStatus)
+    * karate.log('RESPONSE: ')
+    * karate.log(response)
+
     Then status <status>
 
     * eval

@@ -36,6 +36,9 @@ This repository serves as a **learning and experimentation platform** showcasing
 * Shared JavaScript utilities (JWT decoding, validation, token manipulation)
 * Conditional assertions based on response outcomes
 
+Useful resources:
+* https://medium.com/@sachinifonseka08/api-testing-with-karate-framework-53b5d5d47776
+
 ### SOAP API Testing
 
 * SOAP service testing using Karate's built-in XML support
@@ -59,9 +62,15 @@ Implemented Examples:
 ### UI Testing
 
 * UI automation using **Karate UI (Playwright engine)**
-* Login and registration flows
-* Authenticated UI interactions
-* Demonstrates API + UI testing using the **same framework**
+* End-to-end browser testing without Selenium
+* Covers **login and registration validation flows**
+* Extensive **negative and edge-case validation testing**
+* Clean separate of API and UI tests using tags (`@api`, `@ui`)
+* Demonstrates **API and UI testing in the same framework**
+
+Useful resources:
+* https://docs.karatelabs.io/extensions/ui-testing/#shared-features
+
 
 ### Smoke Testing
 

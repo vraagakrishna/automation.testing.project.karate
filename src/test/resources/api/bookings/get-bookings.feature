@@ -5,9 +5,18 @@ Feature: Get bookings (reusable)
     * assert token != null
     * assert expected != null
 
+    * karate.log('URL: ' + baseUrl + '/bookings')
+    * karate.log('HEADER: Authorization ' + 'Bearer ' + token)
+    * karate.log('REQUEST: ')
+    * karate.log(user)
+
     Given url baseUrl + '/bookings'
     And header Authorization = 'Bearer ' + token
     When method GET
+
+    * karate.log('STATUS CODE: ' + responseStatus)
+    * karate.log('RESPONSE: ')
+    * karate.log(response)
 
     # common assertions
     * match responseStatus == expected.status

@@ -2,7 +2,7 @@ Feature: User Booking Tests
 
   Background:
     # common setup for all scenarios
-    * def userFactory = call read('classpath:api/common/user-factory.js')
+    * def userFactory = call read('classpath:common/user-factory.js')
     * def user = userFactory.validUser()
     * def loginUser = userFactory.toLoginUser(user)
 
@@ -51,7 +51,7 @@ Feature: User Booking Tests
         if ('<tokenType>' === 'NONE') return '';
         if ('<tokenType>' === 'INVALID') return 'this-is-not-a-jwt-' + java.util.UUID.randomUUID();
         if ('<tokenType>' === 'EXPIRED') {
-          var jwtUtils = karate.call('classpath:api/common/jwt-utils.js');
+          var jwtUtils = karate.call('classpath:common/jwt-utils.js');
           return jwtUtils.expireJwtToken(session.token);
         }
         if ('<tokenType>' === 'VALID') return session.token;

@@ -5,9 +5,19 @@ Feature: Register user (reusable)
     * assert user != null
     * assert expected != null
 
+    * delete user.confirm_password
+
+    * karate.log('URL: ' + baseUrl + '/auth/register')
+    * karate.log('REQUEST: ')
+    * karate.log(user)
+
     Given url baseUrl + '/auth/register'
     And request user
     When method POST
+
+    * karate.log('STATUS CODE: ' + responseStatus)
+    * karate.log('RESPONSE: ')
+    * karate.log(response)
 
     # common assertions
     * match responseStatus == expected.status
@@ -32,7 +42,7 @@ Feature: Register user (reusable)
         if (!res.pass) karate.fail(res.message);
 
         // validate JWT
-        var jwtUtils = karate.call('classpath:api/common/jwt-utils.js');
+        var jwtUtils = karate.call('classpath:common/jwt-utils.js');
         jwtUtils.validateJwtToken(response.data.token, user);
       }
       else {

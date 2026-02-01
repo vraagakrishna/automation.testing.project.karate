@@ -2,7 +2,7 @@ Feature: Auth Tests
 
   Background:
     # common setup for all scenarios
-    * def userFactory = call read('classpath:api/common/user-factory.js')
+    * def userFactory = call read('classpath:common/user-factory.js')
 
   @api
   Scenario Outline: Login fails for invalid input: <name>
@@ -23,8 +23,11 @@ Feature: Auth Tests
 
     Examples:
       | name                                 | variant              | status | message                           |
+      | Missing Email and Password           | missingPayload       | 400    | 'Email and password are required' |
       | Missing Email                        | missingLoginEmail    | 400    | 'Email and password are required' |
       | Missing Password                     | missingLoginPassword | 400    | 'Email and password are required' |
+      | Invalid Email                        | invalidLoginEmail    | 401    | 'Invalid credentials'             |
+      | Short Password                       | shortLoginPassword   | 401    | 'Invalid credentials'             |
       | Valid Data Login Before Registration | validLoginUser       | 401    | 'Invalid credentials'             |
 
   @api
@@ -46,19 +49,19 @@ Feature: Auth Tests
     * karate.call('classpath:api/auth/register-user.feature', { user: user, expected: expected })
 
     Examples:
-      | name                     | variant                | status | message                                       | errors                                                                                                   |
-      | Mising First Name        | missingFirstName       | 422    | 'Validation failed'                           | {first_name: 'First name is required' }                                                                  |
-      | Missing Last Name        | missingLastName        | 422    | 'Validation failed'                           | {last_name: 'Last name is required' }                                                                    |
-      | Missing Email            | missingEmail           | 422    | 'Validation failed'                           | {email: 'Email is required' }                                                                            |
-      | Missing Password         | missingPassword        | 422    | 'Validation failed'                           | {password: 'Password is required' }                                                                      |
-      | Missing Phone            | missingPhone           | 422    | 'Validation failed'                           | {phone: 'Phone number is required' }                                                                     |
-      | Short Last Name          | shortLastName          | 422    | 'Validation failed'                           | {last_namt: 'Last name must be at least 2 characters' }                                                  |
-      | Short Password           | shortPassword          | 422    | 'Validation failed'                           | {password: 'Password must be at least 8 characters' }                                                    |
-      | Weak Password            | weakPassword           | 422    | 'Validation failed'                           | {password: 'Password must contain at least one lowercase letter, one uppercase letter, and one number' } |
-      | Short Phone              | shortPhone             | 422    | 'Validation failed'                           | {phone: 'Phone number must contain at least 10 digits' }                                                 |
-      | Long Phone               | longPhone              | 422    | 'Validation failed'                           | {phone: 'Phone number cannot contain more than 15 digits' }                                              |
-      | Long First Name          | longFirstName          | 422    | 'Validation failed'                           | {first_name: 'First name is too long (maximum 100 characters)'}                                          |
-      | Long Last Name           | longLastName           | 422    | 'Validation failed'                           | {last_name: 'Last name is too long (maximum 100 characters)'}                                            |
+      | name              | variant          | status | message             | errors                                                                                                   |
+      | Mising First Name | missingFirstName | 422    | 'Validation failed' | {first_name: 'First name is required' }                                                                  |
+      | Missing Last Name | missingLastName  | 422    | 'Validation failed' | {last_name: 'Last name is required' }                                                                    |
+      | Missing Email     | missingEmail     | 422    | 'Validation failed' | {email: 'Email is required' }                                                                            |
+      | Missing Password  | missingPassword  | 422    | 'Validation failed' | {password: 'Password is required' }                                                                      |
+      | Missing Phone     | missingPhone     | 422    | 'Validation failed' | {phone: 'Phone number is required' }                                                                     |
+      | Short Last Name   | shortLastName    | 422    | 'Validation failed' | {last_namt: 'Last name must be at least 2 characters' }                                                  |
+      | Short Password    | shortPassword    | 422    | 'Validation failed' | {password: 'Password must be at least 8 characters' }                                                    |
+      | Weak Password     | weakPassword     | 422    | 'Validation failed' | {password: 'Password must contain at least one lowercase letter, one uppercase letter, and one number' } |
+      | Short Phone       | shortPhone       | 422    | 'Validation failed' | {phone: 'Phone number must contain at least 10 digits' }                                                 |
+      | Long Phone        | longPhone        | 422    | 'Validation failed' | {phone: 'Phone number cannot contain more than 15 digits' }                                              |
+      | Long First Name   | longFirstName    | 422    | 'Validation failed' | {first_name: 'First name is too long (maximum 100 characters)'}                                          |
+      | Long Last Name    | longLastName     | 422    | 'Validation failed' | {last_name: 'Last name is too long (maximum 100 characters)'}                                            |
 
   @api
   Scenario: Register + Login flow
