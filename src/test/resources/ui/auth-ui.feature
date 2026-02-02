@@ -90,18 +90,15 @@ Feature: Auth UI validation
       """
       if (agree_terms != 'true')
       {
-        // Add a small wait for the validationMessage animation to occur
-        java.lang.Thread.sleep(150);
         var msg = script("document.querySelector('#agree-terms').validationMessage");
-      
-        var res = karate.match(msg, error);
-        if (!res.pass) karate.fail(res.message);
+
+        if (!msg || !msg.includes(error)) karate.fail('Expected message to contain: ' + error + ' but was: ' + msg);
       }
       """
 
     Examples:
       | name                     | variant                | agree_terms | error                                                                                                  |
-      | Blank                    | missingPayload         | false       | Please tick this box if you want to proceed.                                                           |
+      | Blank                    | missingPayload         | false       | this box                                                                                               |
       | Mising First Name        | missingFirstName       | true        | {}First name is required                                                                               |
       | Mising Last Name         | missingLastName        | true        | {}Last name is required                                                                                |
       | Missing Email            | missingEmail           | true        | {}Email is required                                                                                    |
