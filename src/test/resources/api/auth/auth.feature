@@ -55,7 +55,7 @@ Feature: Auth Tests
       | Missing Email     | missingEmail     | 422    | 'Validation failed' | {email: 'Email is required' }                                                                            |
       | Missing Password  | missingPassword  | 422    | 'Validation failed' | {password: 'Password is required' }                                                                      |
       | Missing Phone     | missingPhone     | 422    | 'Validation failed' | {phone: 'Phone number is required' }                                                                     |
-      | Short Last Name   | shortLastName    | 422    | 'Validation failed' | {last_namt: 'Last name must be at least 2 characters' }                                                  |
+      | Short Last Name   | shortLastName    | 422    | 'Validation failed' | {last_name: 'Last name must be at least 2 characters' }                                                  |
       | Short Password    | shortPassword    | 422    | 'Validation failed' | {password: 'Password must be at least 8 characters' }                                                    |
       | Weak Password     | weakPassword     | 422    | 'Validation failed' | {password: 'Password must contain at least one lowercase letter, one uppercase letter, and one number' } |
       | Short Phone       | shortPhone       | 422    | 'Validation failed' | {phone: 'Phone number must contain at least 10 digits' }                                                 |
