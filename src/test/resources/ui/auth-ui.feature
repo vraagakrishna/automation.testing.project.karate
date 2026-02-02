@@ -31,6 +31,8 @@ Feature: Auth UI validation
 
     * def start = new Date().getTime()
     * click('{button}Sign in')
+    * karate.log('Clicked on submit button')
+    * screenshot()
 
     * waitFor(error)
 
@@ -84,6 +86,8 @@ Feature: Auth UI validation
     * if (agree_terms == 'true') leftOf('{}I agree to the').click()
 
     * click('{button}Create Account')
+    * karate.log('Clicked on submit button')
+    * screenshot()
 
     * if (agree_terms == 'true') waitFor(error)
 
