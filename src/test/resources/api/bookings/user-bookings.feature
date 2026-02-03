@@ -71,8 +71,8 @@ Feature: User Booking Tests
     * karate.call('classpath:api/bookings/get-bookings.feature', { token: token, expected: expected, registerUser: session.user})
 
     Examples:
-      | name           | tokenType  | status | success | message                          |
-      | Without Token  | NONE       | 401    | false   | 'Authorization token required'   |
-      | Invalid Token  | INVALID    | 401    | false   | 'Invalid or expired token'       |
-      | Expired Token  | EXPIRED    | 401    | false   | 'Invalid or expired token'       |
-      | Valid Token    | VALID      | 200    | true    | 'Success' |
+      | name          | tokenType | status | success | message                        |
+      | Without Token | NONE      | 401    | false   | 'Authorization token required' |
+      | Invalid Token | INVALID   | 401    | false   | 'Invalid or expired token'     |
+      | Expired Token | EXPIRED   | 401    | false   | 'Invalid or expired token'     |
+      | Valid Token   | VALID     | 200    | true    | 'Success'                      |

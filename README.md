@@ -165,6 +165,7 @@ Examples:
 │   │   └── ScenarioLoggerHook.java
 │   └── runners                             # JUnit runners that selects tags, features, and execution scope
 │       ├── ApiTestRunner.java
+│       ├── FullTestRunner.java
 │       ├── PerformanceTestRunner.java
 │       ├── SanityTestRunner.java
 │       ├── SmokeTestRunner.java
@@ -252,7 +253,7 @@ Run them with:
 mvn test -Pfull
 ```
 
-* Executes all test runners (`ApiTestRunner.java`, `UITestRunner.java`, `PerformanceTestRunner.java`, etc.)
+* Executes full test runner (`FullTestRunner.java`)
 * Only run this after smoke tests pass for stability.
 
 ### Notes:
