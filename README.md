@@ -79,7 +79,7 @@ Implemented Examples:
 
 Useful resources:
 
-* https://docs.karatelabs.io/extensions/ui-testing/#shared-features
+* https://docs.karatelabs.io/extensions/ui-testing
 
 ### Performance Testing
 
