@@ -26,6 +26,11 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    outputs:
+      smoke: ${{ steps.smoke.outcome }}
+      full: ${{ steps.full.outcome }}
+      perf: ${{ steps.perf.outcome }}
+
     steps:
       # Checkout current repo
       - name: Checkout code
@@ -38,19 +43,59 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      # Run smoke tests
+      # Run smoke tests (gatekeeper)
       - name: Run smoke tests
+        id: smoke
         run: mvn clean test -Psmoke
 
-      # Run all tests only if smoke passed
-      - name: Run all tests
-        if: ${{ success() }}  # Ensures it runs only if previous step passed
+      # Run full tests ONLY if smoke passed
+      - name: Run full test suite
+        id: full
+        if: ${{ steps.smoke.outcome == 'success' }}  # Ensures it runs only if previous step passed
         run: mvn clean test -Pfull
+        continue-on-error: true
 
-      # Upload test report
-      - name: Upload Test Evidence
+      # Run performance tests ONLY if smoke passed
+      - name: Run performance tests
+        id: perf
+        if: ${{ steps.smoke.outcome == 'success' }}  # Ensures it runs only if previous step passed
+        run: mvn test -Pperf
+        continue-on-error: true
+
+      # Always generate merged report (even if tests failed)
+      - name: Generated consolidated test report
+        if: ${{ always() }}  # Ensures report is uploaded even if previous steps fail
+        run: mvn test -Preport
+
+      # Always upload report artifacts
+      - name: Upload test evidence
         if: ${{ always() }}  # Ensures report is uploaded even if previous steps fail
         uses: actions/upload-artifact@v4
         with:
           name: test-evidence
-          path: ./target/karate-reports/
+          path: ./target/karate-merged-report/cucumber-html-reports/
+
+      # Fail pipeline if any test phase failed
+      - name: Fail pipeline if tests failed
+        if: ${{ always() }}
+        run: |
+          echo "Smoke outcome: ${{ steps.smoke.outcome }}"
+          echo "Full outcome:  ${{ steps.full.outcome }}"
+          echo "Perf outcome:  ${{ steps.perf.outcome }}"
+
+          if [ "${{ steps.smoke.outcome }}" != "success" ]; then
+            echo "Smoke tests failed"
+            exit 1
+          fi
+
+          if [ "${{ steps.full.outcome }}" == "failure" ]; then
+            echo "Full test suite failed"
+            exit 1
+          fi
+
+          if [ "${{ steps.perf.outcome }}" == "failure" ]; then
+            echo "Performance tests failed"
+            exit 1
+          fi
+
+          echo "All test phases passed"

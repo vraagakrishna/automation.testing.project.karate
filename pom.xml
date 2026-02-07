@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>KarateAutomationTesting</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <karate.version>1.4.1</karate.version>
+        <maven.surefire.version>3.2.5</maven.surefire.version>
+        <cucumber.reporting.version>5.7.8</cucumber.reporting.version>
+        <logback.classic.version>1.4.14</logback.classic.version>
+    </properties>
+
+    <dependencies>
+        <!-- Source: https://mvnrepository.com/artifact/com.intuit.karate/karate-junit5 -->
+        <dependency>
+            <groupId>com.intuit.karate</groupId>
+            <artifactId>karate-junit5</artifactId>
+            <version>${karate.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Required ONLY for ReportBuilder -->
+        <dependency>
+            <groupId>net.masterthought</groupId>
+            <artifactId>cucumber-reporting</artifactId>
+            <version>${cucumber.reporting.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- For Logging -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.classic.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+
+        <profile>
+            <id>smoke</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <test.runner>SmokeTestRunner</test.runner>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>full</id>
+            <properties>
+                <test.runner>FullTestRunner</test.runner>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>perf</id>
+            <properties>
+                <test.runner>PerformanceTestRunner</test.runner>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>report</id>
+            <properties>
+                <test.runner>KarateReportRunner</test.runner>
+            </properties>
+        </profile>
+
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
+
+                <configuration>
+                    <test>${test.runner}</test>
+                    <systemPropertyVariables>
+                        <karate.cucumberJson>true</karate.cucumberJson>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
