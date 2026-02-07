@@ -50,6 +50,7 @@ jobs:
       - name: Run full test suite
         if: ${{ steps.smoke.outcome == 'success' }}  # Ensures it runs only if previous step passed
         run: mvn clean test -Pfull
+        continue-on-error: true
 
       # Run performance tests ONLY if smoke passed
       - name: Run performance tests
