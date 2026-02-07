@@ -16,6 +16,8 @@ public class PerformanceTestRunner {
         Results results = Runner.path("classpath:")
                                 .tags("@perf", "@api")
                                 .hook(new ScenarioLoggerHook())
+                                .outputHtmlReport(true)
+                                .outputCucumberJson(true)
                                 .parallel(10);
 
         assertEquals(0, results.getFailCount(), results.getErrorMessages());
@@ -29,7 +31,8 @@ public class PerformanceTestRunner {
         return Karate.run("classpath:")
                      .tags("@perf", "@ui")
                      .hook(new ScenarioLoggerHook())
-                     .outputHtmlReport(true);
+                     .outputHtmlReport(true)
+                     .outputCucumberJson(true);
     }
 
 }

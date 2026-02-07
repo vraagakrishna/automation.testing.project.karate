@@ -9,7 +9,9 @@ public class SanityTestRunner {
     Karate sanity() {
         return Karate.run("classpath:")
                      .tags("@sanity")
-                     .hook(new ScenarioLoggerHook());
+                     .hook(new ScenarioLoggerHook())
+                     .outputHtmlReport(true)
+                     .outputCucumberJson(true);
     }
 
 }

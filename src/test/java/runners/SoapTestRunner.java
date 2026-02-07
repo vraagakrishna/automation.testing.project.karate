@@ -10,7 +10,9 @@ public class SoapTestRunner {
     Karate soap() {
         return Karate.run("classpath:")
                      .tags("@soap")
-                     .hook(new ScenarioLoggerHook());
+                     .hook(new ScenarioLoggerHook())
+                     .outputHtmlReport(true)
+                     .outputCucumberJson(true);
     }
 
 }

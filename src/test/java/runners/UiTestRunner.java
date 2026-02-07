@@ -11,7 +11,8 @@ public class UiTestRunner {
         return Karate.run("classpath:")
                      .tags("@ui")
                      .hook(new ScenarioLoggerHook())
-                     .outputHtmlReport(true);
+                     .outputHtmlReport(true)
+                     .outputCucumberJson(true);
     }
 
 }

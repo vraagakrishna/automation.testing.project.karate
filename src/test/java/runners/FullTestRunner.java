@@ -13,8 +13,10 @@ public class FullTestRunner {
     void runAllTests() {
         Results results = Runner.builder()
                                 .path("classpath:")
-                                .tags("~@ignore")
+                                .tags("~@ignore", "~@perf")
                                 .hook(new ScenarioLoggerHook())
+                                .outputHtmlReport(true)
+                                .outputCucumberJson(true)
                                 .parallel(1);
 
         assertEquals(0, results.getFailCount(), results.getErrorMessages());

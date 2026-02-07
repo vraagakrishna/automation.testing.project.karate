@@ -9,7 +9,9 @@ public class SmokeTestRunner {
     Karate smoke() {
         return Karate.run("classpath:")
                      .tags("@smoke")
-                     .hook(new ScenarioLoggerHook());
+                     .hook(new ScenarioLoggerHook())
+                     .outputHtmlReport(true)
+                     .outputCucumberJson(true);
     }
 
 }

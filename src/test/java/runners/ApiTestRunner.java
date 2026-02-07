@@ -15,6 +15,8 @@ public class ApiTestRunner {
         Results results = Runner.path("classpath:")
                                 .tags("@api")
                                 .hook(new ScenarioLoggerHook())
+                                .outputHtmlReport(true)
+                                .outputCucumberJson(true)
                                 .parallel(1);
 
         assertEquals(0, results.getFailCount(), results.getErrorMessages());

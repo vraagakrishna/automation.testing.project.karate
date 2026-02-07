@@ -166,6 +166,7 @@ Examples:
 │   └── runners                             # JUnit runners that selects tags, features, and execution scope
 │       ├── ApiTestRunner.java
 │       ├── FullTestRunner.java
+│       ├── KarateReportRunner.java
 │       ├── PerformanceTestRunner.java
 │       ├── SanityTestRunner.java
 │       ├── SmokeTestRunner.java
@@ -228,37 +229,72 @@ cd automation.testing.project.karate
 mvn clean install
 ```
 
+<br/>
+
 ## Running Tests Locally
 
-This project uses **Maven profiles** to control test execution:
+This project uses **Maven profiles** to control which test suites are executed.
 
-### 1. Run Smoke Tests Only
+### 1. Run Smoke Tests
 
 Smoke tests are **fast, critical checks** to make sure the system is stable.
-Run them with:
+They should always be run first.
 
 ```bash
-mvn test -PSmoke
+mvn test -Psmoke
 ```
 
-* Only smoke tests (`SmokeTestRunner.java`) will run.
-* Useful for quick verification before running the full test suite
+**What it does:**
+
+* Executed the smoke test runner (`SmokeTestRunner.java`) 
+* Intended as a gatekeeper before running longer test suites.
 
 ### 2. Run Full Test Suite
 
-The full suite includes **API**, **UI**, **performance**, and **other tests**.
-Run them with:
+The full suite includes **API**, **UI**, and **integration tests**.
 
 ```bash
 mvn test -Pfull
 ```
 
+**What it does:**
+
 * Executes full test runner (`FullTestRunner.java`)
-* Only run this after smoke tests pass for stability.
+* Should only be run **after smoke tests pass**
+
+### 3. Run Performance Tests
+
+Performance tests validate system behaviour under load.
+
+```bash
+mvn test -Pperf
+```
+
+**What this does:**
+
+* Executes the performance test runner (`PerformanceTestRunner.java`)
+* Should only be run after smoke tests pass
+
+### 4. Generate Consolidated Test Report
+
+Generates a **single merged HTML report** using results from all test runs. 
+
+```bash
+mvn test -Preport
+```
+
+**What this does:**
+
+* Executes the report generator (`KarateReportRunner.java`)
+* Merged all `karate-reports*` folders into one report
+* Includes screenshots and embedded evidence
+* Can be run even if some tests fail
 
 ### Notes:
 
-* Smoke tests act as a **gatekeeper**. If they fail, it is recommended not to run the full suite.
+* Smoke tests act as a **gatekeeper**. 
+* If smoke tests fail, it is recommended **not** to run full or performance tests
+* Reports can always be generated independently to inspect failures
 
 <br/>
 
