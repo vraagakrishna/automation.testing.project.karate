@@ -40,26 +40,27 @@ jobs:
 
       # Run smoke tests (gatekeeper)
       - name: Run smoke tests
+        id: smoke
         run: mvn clean test -Psmoke
 
       # Run full tests ONLY if smoke passed
       - name: Run full test suite
-        if: ${{ success() }}  # Ensures it runs only if previous step passed
+        if: steps.smoke.outcome == 'success'  # Ensures it runs only if previous step passed
         run: mvn clean test -Pfull
 
       # Run performance tests ONLY if smoke passed
       - name: Run performance tests
-        if: ${{ success() }}  # Ensures it runs only if previous step passed
+        if: steps.smoke.outcome == 'success'  # Ensures it runs only if previous step passed
         run: mvn test -Pperf
 
       # Always generate merged report (even if tests failed)
       - name: Generated consolidated test report
-        if: ${{ always() }}  # Ensures report is uploaded even if previous steps fail
+        if: always()  # Ensures report is uploaded even if previous steps fail
         run: mvn test -Preport
 
       # Always upload report artifacts
       - name: Upload test evidence
-        if: ${{ always() }}  # Ensures report is uploaded even if previous steps fail
+        if: always()  # Ensures report is uploaded even if previous steps fail
         uses: actions/upload-artifact@v4
         with:
           name: test-evidence
