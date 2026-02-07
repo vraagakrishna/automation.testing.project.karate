@@ -8,8 +8,8 @@ function fn() {
     karate.configure('connectTimeout', 10000);
     karate.configure('readTimeout', 20000);
 
-    // waitFor time is 10 x 1000ms = 10 seconds total
-    karate.configure('retry', {count: 10, interval: 1000})
+    // waitFor time is 20 x 1000ms = 20 seconds total
+    karate.configure('retry', {count: 20, interval: 1000})
 
     karate.configure('driver', { showDriverLog: false });
 
