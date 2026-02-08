@@ -1,14 +1,38 @@
-# Karate Automation Testing Framework
+# Karate Test Automation Framework
+
+## Table of Contents
+
+- [Highlights](#highlights)
+- [Project Goal](#project-goal)
+- [Pre-requisites / Requirements](#pre-requisites--requirements)
+- [What This Project Demonstrates](#what-this-project-demonstrates)
+- [Project Structure](#project-structure)
+- [Test Tagged Strategy](#test-tagged-strategy)
+- [Setup / Installation](#setup--installation)
+- [Running Tests Locally](#running-tests-locally)
+- [CI/CD Pipelines](#cicd-pipelines)
+
+<br/>
+
+## Highlights
+
+* Unified testing for API, UI, SOAP, performance
+* Layered test strategy: smoke -> full -> performance
+* Parallel test execution for performance validations
+* CI/CD integration with clear pass/fail logic
+* Merged HTML test reports with screenshots and artifacts
+
+<br/>
 
 ## Project Goal
 
-The primary goal of this project is to **explore**, **understand**, and **gain hands-on experience** with the **Karate
-testing framework**.
+The primary goal of this project is to **demonstrate practical proficiency** with the **Karate testing framework**
+through hands-on implementation.
 
-> The **focus is _not_ on what is being tested**, but on **_how_ Karate can be used** to perform different types of
+> The **focus is _not_ on what is being tested**, but on **_how_ Karate can be applied** to support multiple types of
 > testing using a single, unified tool.
 
-This repository serves as a **learning and experimentation platform** showcasing what Karate offers across:
+This repository serves as a **capability showcase** highlighting how Karate can be used across:
 
 * API testing
 * SOAP API testing
@@ -158,6 +182,8 @@ Examples:
 
 ## Project Structure
 
+The project follows a modular structure to separate test types, configurations, and reusable components.
+
 ```
 .
 ├── src/test/java
@@ -219,12 +245,14 @@ Examples:
 ## Setup / Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/vraagakrishna/automation.testing.project.karate.git 
 cd automation.testing.project.karate
 ```
 
 2. Build the project
+
 ```bash
 mvn clean install
 ```
@@ -246,7 +274,7 @@ mvn test -Psmoke
 
 **What it does:**
 
-* Executed the smoke test runner (`SmokeTestRunner.java`) 
+* Executed the smoke test runner (`SmokeTestRunner.java`)
 * Intended as a gatekeeper before running longer test suites.
 
 ### 2. Run Full Test Suite
@@ -277,7 +305,7 @@ mvn test -Pperf
 
 ### 4. Generate Consolidated Test Report
 
-Generates a **single merged HTML report** using results from all test runs. 
+Generates a **single merged HTML report** using results from all test runs.
 
 ```bash
 mvn test -Preport
@@ -292,7 +320,7 @@ mvn test -Preport
 
 ### Notes:
 
-* Smoke tests act as a **gatekeeper**. 
+* Smoke tests act as a **gatekeeper**.
 * If smoke tests fail, it is recommended **not** to run full or performance tests
 * Reports can always be generated independently to inspect failures
 
@@ -300,10 +328,11 @@ mvn test -Preport
 
 ## CI/CD Pipelines
 
-The CI pipeline automatically:
+This repository includes a GitHub Actions workflow that:
 
 1. Runs smoke tests on every push
-2. Runs sanity tests on pull requests
-3. Fails the build on test or quality issues
+2. Blocks full and performance tests when smoke fails
+3. Generates consolidated HTML reports regardless fo test outcomes
+4. Upload artifacts for review and traceability
 
 <br/>
